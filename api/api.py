@@ -71,3 +71,12 @@ class Twitter(object):
             api = tweepy.API(auth)
             
             return tweepy.Cursor(api.user_timeline).items(limite)
+        
+    def getUserInformation(self, id):
+        
+        for config in self.twitter:
+            auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
+            auth.set_access_token(config.access_key, config.access_secret)
+            api = tweepy.API(auth)
+            
+            return api.mentions()

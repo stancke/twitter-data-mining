@@ -11,6 +11,11 @@ def busca(request):
 
     busca = request.REQUEST.get('busca')
     b = Twitter().getBusca(busca)
+    
+    id = 10
+    info = Twitter().getUserInformation(id)
+    
+    print info
     request.session['resultados'] = b
     return render_to_response('index/busca.html', {"busca": b})
 
