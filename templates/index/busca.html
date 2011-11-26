@@ -3,9 +3,10 @@
     <th></th>
     <th class="ui-widget-header ui-corner-all">Usuário</th>
     <th class="ui-widget-header ui-corner-all">Texto</th>
+    <th class="ui-widget-header ui-corner-all">Tweetado em</th>
     <th class="ui-widget-header ui-corner-all">Geo</th>
     <th class="ui-widget-header ui-corner-all">Localização</th>
-    <th class="ui-widget-header ui-corner-all">Criado em</th>
+    <th class="ui-widget-header ui-corner-all">Perfil criado em</th>
     <th class="ui-widget-header ui-corner-all">Língua</th>
     <th class="ui-widget-header ui-corner-all">Descrição</th>
     <th class="ui-widget-header ui-corner-all">Favoritos</th>
@@ -16,8 +17,9 @@
  {% for b in busca%} 
   <tr>
 	<td class="ui-widget-content ui-corner-all"><img src="{{ b.profile_image_url}}"/></td>
-	<td class="ui-widget-content ui-corner-all">{{ b.from_user}}</td>
+	<td class="ui-widget-content ui-corner-all"><a href="http://twitter.com/{{ b.from_user}}">{{ b.from_user}}</a></td>
 	<td class="ui-widget-content ui-corner-all">{{ b.text}}</td>
+	<td class="ui-widget-content ui-corner-all">{{ b.tweet_created_at}}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.geo }}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.location }}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.created_at }}</td>
