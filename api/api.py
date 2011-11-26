@@ -74,9 +74,4 @@ class Twitter(object):
         
     def getUserInformation(self, id):
         
-        for config in self.twitter:
-            auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
-            auth.set_access_token(config.access_key, config.access_secret)
-            api = tweepy.API(auth)
-            
-            return api.mentions()
+        return tweepy.api.get_user(id)

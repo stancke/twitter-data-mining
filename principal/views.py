@@ -10,14 +10,34 @@ def index(request):
 def busca(request):
 
     busca = request.REQUEST.get('busca')
-    b = Twitter().getBusca(busca)
+    t = Twitter()
+    b = t.getBusca(busca)
     
-    id = 10
-    info = Twitter().getUserInformation(id)
+    usuarios = []
     
-    print info
-    request.session['resultados'] = b
-    return render_to_response('index/busca.html', {"busca": b})
+    for aux in b:
+        usuario = t.getUserInformation(aux.from_user_id)
+        
+        user = {
+                'profile_image_url':aux.profile_image_url,
+                'from_user':aux.from_user,
+                'text':aux.text,
+                'geo':aux.geo,
+                'location':usuario.location,
+                'created_at':usuario.created_at,
+                'favourites_count':usuario.favourites_count,
+                'followers_count':usuario.followers_count,
+                'lang':usuario.lang,
+                'description':usuario.description,
+                'friends_count':usuario.friends_count,
+                'statuses_count':usuario.statuses_count
+        }
+        
+        usuarios.append(user)
+        print 1
+        
+    request.session['resultados'] = usuarios
+    return render_to_response('index/busca.html', {"busca": usuarios})
 
 def gerar_xml(request):
     
