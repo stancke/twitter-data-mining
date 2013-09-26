@@ -71,7 +71,9 @@ class Twitter(object):
             api = tweepy.API(auth)
             
             return tweepy.Cursor(api.user_timeline).items(limite)
-        
+    '''
+        NAO UTILIZAR ESTA FUNCAO
+    '''    
     def getUserInformation(self, id):
         
         return tweepy.api.get_user(id)

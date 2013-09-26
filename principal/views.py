@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from api.api import Twitter
+from pprint import pprint
 
 def index(request):
 
@@ -16,22 +17,24 @@ def busca(request):
     usuarios = []
     
     for aux in b:
-        usuario = t.getUserInformation(aux.from_user_id)
+	#pprint(vars(aux.author))
+
+        #usuario = t.getUserInformation(aux.id)
         
         user = {
-                'profile_image_url':aux.profile_image_url,
-                'from_user':aux.from_user,
+                'profile_image_url':aux.author.profile_image_url,
+                'from_user':aux.author.name,
                 'text':aux.text,
                 'tweet_created_at': aux.created_at,
                 'geo':aux.geo,
-                'location':usuario.location,
-                'created_at':usuario.created_at,
-                'favourites_count':usuario.favourites_count,
-                'followers_count':usuario.followers_count,
-                'lang':usuario.lang,
-                'description':usuario.description,
-                'friends_count':usuario.friends_count,
-                'statuses_count':usuario.statuses_count
+                'location':aux.author.location,
+                'created_at':aux.author.created_at,
+                'favourites_count':aux.author.favourites_count,
+                'followers_count':aux.author.followers_count,
+                'lang':aux.author.lang,
+                'description':aux.author.description,
+                'friends_count':aux.author.friends_count,
+                'statuses_count':aux.author.statuses_count
         }
         
         usuarios.append(user)
