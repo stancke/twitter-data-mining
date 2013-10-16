@@ -51,7 +51,7 @@ class Twitter(object):
             auth = tweepy.OAuthHandler(config.consumer_key, config.consumer_secret)
             auth.set_access_token(config.access_key, config.access_secret)
             api = tweepy.API(auth)
-
+	#return api.search(termo)
         return api.search(termo, rpp=25, lang='pt')
     
     def getMencoes(self, limite = None):

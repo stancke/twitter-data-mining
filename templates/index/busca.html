@@ -4,6 +4,7 @@
     <th class="ui-widget-header ui-corner-all">Usuário</th>
     <th class="ui-widget-header ui-corner-all">Texto</th>
     <th class="ui-widget-header ui-corner-all">Tweetado em</th>
+    <th class="ui-widget-header ui-corner-all">Retweets</th>
     <th class="ui-widget-header ui-corner-all">Geo</th>
     <th class="ui-widget-header ui-corner-all">Localização</th>
     <th class="ui-widget-header ui-corner-all">Perfil criado em</th>
@@ -20,6 +21,7 @@
 	<td class="ui-widget-content ui-corner-all"><a href="http://twitter.com/{{ b.from_user}}">{{ b.from_user}}</a></td>
 	<td class="ui-widget-content ui-corner-all">{{ b.text}}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.tweet_created_at}}</td>
+	<td class="ui-widget-content ui-corner-all">{{ b.retweets}}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.geo }}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.location }}</td>
 	<td class="ui-widget-content ui-corner-all">{{ b.created_at }}</td>

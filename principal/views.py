@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from api.api import Twitter
 from pprint import pprint
+from principal.models import *
 
 def index(request):
 
@@ -18,7 +19,7 @@ def busca(request):
     
     for aux in b:
 	#pprint(vars(aux.author))
-
+	#pprint(vars(aux))
         #usuario = t.getUserInformation(aux.id)
         
         user = {
@@ -27,6 +28,7 @@ def busca(request):
                 'text':aux.text,
                 'tweet_created_at': aux.created_at,
                 'geo':aux.geo,
+		'retweets': aux.retweet_count,
                 'location':aux.author.location,
                 'created_at':aux.author.created_at,
                 'favourites_count':aux.author.favourites_count,
@@ -39,6 +41,8 @@ def busca(request):
         
         usuarios.append(user)
         print 'OK!'
+	t = Tweets()
+	t.insert(user)
         
     request.session['resultados'] = usuarios
     return render_to_response('index/busca.html', {"busca": usuarios})
@@ -70,4 +74,3 @@ def gerar_xml(request):
     response['Content-Disposition'] = 'attachment; filename=twitter.xml'
     
     return response
-
