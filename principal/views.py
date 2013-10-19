@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from api.api import Twitter
 from pprint import pprint
-from principal.models import *
+from principal.models import Tweets
 
 def index(request):
 
@@ -28,7 +28,7 @@ def busca(request):
                 'text':aux.text,
                 'tweet_created_at': aux.created_at,
                 'geo':aux.geo,
-		'retweets': aux.retweet_count,
+		        'retweets': aux.retweet_count,
                 'location':aux.author.location,
                 'created_at':aux.author.created_at,
                 'favourites_count':aux.author.favourites_count,
@@ -40,9 +40,21 @@ def busca(request):
         }
         
         usuarios.append(user)
-        print 'OK!'
-	t = Tweets()
-	t.insert(user)
+        try:
+            t = Tweets(user= aux.author.name, 
+               text=aux.text,tweetdate = aux.created_at,
+               location  = aux.author.location,
+               profilecreated  = aux.author.created_at,
+               description  = aux.author.description,
+               favorites  = aux.author.favourites_count,
+               followers  = aux.author.followers_count,
+               friends  = aux.author.friends_count,
+               tweets  = aux.author.statuses_count,
+               retweets  = aux.retweet_count)
+       
+            t.save()
+        except Exception as e:
+            print '%s (%s)' % (e.message, type(e))
         
     request.session['resultados'] = usuarios
     return render_to_response('index/busca.html', {"busca": usuarios})

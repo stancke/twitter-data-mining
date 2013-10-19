@@ -14,8 +14,12 @@
 		<fieldset class="ui-widget-content ui-corner-all">
 			<legend class="ui-widget-header ui-corner-all">Busca</legend>
 			<form id="frmBusca">
-				<input type="text" name="busca" size="50" />
+				<label>Busca:</label>
+				<input type="text" name="busca" id="palavra_chave" size="50" />
+				<label>Intervalo (segundos):</label>
+				<input type="text" name="intervalo" id="intervalo" size="1" />
 				<input type="button" value="Buscar" class="ui-state-default ui-corner-all" id="btnBusca" />
+				<input type="button" value="Busca aleatória" class="ui-state-default ui-corner-all" id="btnBuscaAleatoria" />
 				<input type="button" value="Gerar XML" class="ui-state-default ui-corner-all" id="btnGerarXml" />
 			</form>
 		</fieldset>

@@ -1,22 +1,19 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-import MySQLdb
 
-# Create your models here.
-class Tweets(object):
+class Tweets(models.Model):
+    #id = models.IntegerField(primary_key=True)
+    user = models.CharField(max_length=135, db_column='User', blank=True) # Field name made lowercase.
+    text = models.CharField(max_length=240, db_column='Text', blank=True) # Field name made lowercase.
+    tweetdate = models.CharField(max_length=135, db_column='TweetDate', blank=True) # Field name made lowercase.
+    location = models.CharField(max_length=135, db_column='Location', blank=True) # Field name made lowercase.
+    profilecreated = models.CharField(max_length=135, db_column='ProfileCreated', blank=True) # Field name made lowercase.
+    description = models.CharField(max_length=250, db_column='Description', blank=True) # Field name made lowercase.
+    favorites = models.IntegerField(null=True, db_column='Favorites', blank=True) # Field name made lowercase.
+    followers = models.IntegerField(null=True, db_column='Followers', blank=True) # Field name made lowercase.
+    friends = models.IntegerField(null=True, db_column='Friends', blank=True) # Field name made lowercase.
+    tweets = models.IntegerField(null=True, db_column='Tweets', blank=True) # Field name made lowercase.
+    retweets = models.IntegerField(null=True, db_column='Retweets', blank=True) # Field name made lowercase.
+    class Meta:
+        db_table = u'Tweets'
 
-    def insert(self, user):
-	db = MySQLdb.connect(host="localhost",user="admin",passwd="",db="test")
-        cur = db.cursor()
-
-	#print "INSERT INTO Tweets ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')" . format(user['from_user'], user['text'], user['tweet_created_at'], user['location'], user['created_at'], user['description'], user['favourites_count'], user['followers_count'], user['friends_count'], user['statuses_count'], user['retweets'])
-
-	sql = ''
-	try:
-	    cur.execute(sql)
-	    db.commit()
-	except:
-            db.rollback()
-	    print "Erro ao inserir registro no banco!"
-    
-        db.close()
