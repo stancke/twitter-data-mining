@@ -3,11 +3,40 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from api.api import Twitter
 from pprint import pprint
-from principal.models import Tweets
+from principal.models import *
 
 def index(request):
 
     return render_to_response('index/index.html')
+
+def grava_csv(request):
+    
+    caminho = '/home/stancke/Projetos/twitter-to-xml/arquivos/'
+    arquivo = caminho + request.REQUEST.get('arquivo')
+    tipo =  request.REQUEST.get('tipo')
+    sentimento = request.REQUEST.get('sentimento')
+    
+    import csv
+    with open(arquivo, 'rb') as csvfile:
+        #spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        spamreader = csv.reader(csvfile, delimiter=',')
+        for row in spamreader:
+            print row[2]
+            if tipo == 'test':
+                try:
+                    td = TwitterTestDataEnglish(feed = row[2] )
+                    td.save()
+                except Exception as e:
+                    print '%s (%s)' % (e.message, type(e))
+                    
+            if tipo == 'training':
+                try:
+                    tt = TwitterTrainingDataEnglish(id = row[1] , feed = row[0], sentiment = sentimento )
+                    tt.save()
+                except Exception as e:
+                    print '%s (%s)' % (e.message, type(e))
+
+    return HttpResponse("Gravado!")
 
 def busca(request):
 
@@ -18,8 +47,9 @@ def busca(request):
     usuarios = []
     
     for aux in b:
-	#pprint(vars(aux.author))
-	#pprint(vars(aux))
+        #pprint(vars(aux.author))
+        #pprint(vars(aux))
+        #exit()
         #usuario = t.getUserInformation(aux.id)
         
         user = {
@@ -41,8 +71,11 @@ def busca(request):
         
         usuarios.append(user)
         try:
-            t = Tweets(user= aux.author.name, 
-               text=aux.text,tweetdate = aux.created_at,
+            t = Tweets(
+               usuarionome = aux.author.name,
+               usuarioid =  aux.author.id_str,
+               tweetdate = aux.created_at,
+               text=aux.text,
                location  = aux.author.location,
                profilecreated  = aux.author.created_at,
                description  = aux.author.description,
@@ -50,7 +83,11 @@ def busca(request):
                followers  = aux.author.followers_count,
                friends  = aux.author.friends_count,
                tweets  = aux.author.statuses_count,
-               retweets  = aux.retweet_count)
+               retweets  = aux.retweet_count,
+               respostaastatusid = aux.in_reply_to_status_id_str,
+               respostaausuarioid = aux.in_reply_to_user_id_str,
+               idstatus = aux.id_str,
+               origem = aux.source )
        
             t.save()
         except Exception as e:

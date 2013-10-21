@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'twitter-to-xml.principal.views.index'),
     url(r'^busca/$', 'twitter-to-xml.principal.views.busca'),
+    url(r'^grava_csv/$', 'twitter-to-xml.principal.views.grava_csv'),
     url(r'^xml/$', 'twitter-to-xml.principal.views.gerar_xml'),
     # url(r'^twittertoxml/', include('twittertoxml.foo.urls')),
 
